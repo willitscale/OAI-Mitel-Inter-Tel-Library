@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D8A9876A-CC1F-467D-9C5A-9B618BD55BF6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OAI</RootNamespace>
+    <AssemblyName>OAI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstraction\OAIDictionary.cs" />
+    <Compile Include="Activity\OAIRunning.cs" />
+    <Compile Include="Bus\OAIAgentBus.cs" />
+    <Compile Include="Bus\OAIAgentHuntGroupBus.cs" />
+    <Compile Include="Bus\OAIBus.cs" />
+    <Compile Include="Bus\OAICallBus.cs" />
+    <Compile Include="Bus\OAIDeviceBus.cs" />
+    <Compile Include="Bus\OAIDNDBus.cs" />
+    <Compile Include="Bus\OAIFeatureBus.cs" />
+    <Compile Include="Bus\OAIHuntGroupBus.cs" />
+    <Compile Include="Bus\OAITrunkBus.cs" />
+    <Compile Include="Constants\OAICallingDeviceType.cs" />
+    <Compile Include="Constants\OAIEventCause.cs" />
+    <Compile Include="Constants\OAIFeatureCodes.cs" />
+    <Compile Include="Controllers\OAIAgentsController.cs" />
+    <Compile Include="Controllers\OAICallsController.cs" />
+    <Compile Include="Controllers\OAIController.cs" />
+    <Compile Include="Controllers\OAIDevicesController.cs" />
+    <Compile Include="Controllers\OAIHuntGroupsController.cs" />
+    <Compile Include="Controllers\OAINodeController.cs" />
+    <Compile Include="Controllers\OAITrunksController.cs" />
+    <Compile Include="Factories\OAIEventFactory.cs" />
+    <Compile Include="Factories\OAIEventProcessFactory.cs" />
+    <Compile Include="Models\OAIAgentModel.cs" />
+    <Compile Include="Models\OAICallModel.cs" />
+    <Compile Include="Models\OAIModel.cs" />
+    <Compile Include="Models\OAIDeviceModel.cs" />
+    <Compile Include="Models\OAIHuntGroupModel.cs" />
+    <Compile Include="Models\OAINodeModel.cs" />
+    <Compile Include="Models\OAITrunkModel.cs" />
+    <Compile Include="Packets\Commands\OAIClearCall.cs" />
+    <Compile Include="Packets\Commands\OAIClearConnection.cs" />
+    <Compile Include="Packets\Commands\OAIExtensionFeature.cs" />
+    <Compile Include="Packets\Commands\OAIHoldCall.cs" />
+    <Compile Include="Packets\Commands\OAIMakeCall.cs" />
+    <Compile Include="Packets\Commands\OAIMonitorStart.cs" />
+    <Compile Include="Packets\Commands\OAINodeAware.cs" />
+    <Compile Include="Packets\Commands\OAINoOperation.cs" />
+    <Compile Include="Packets\Commands\OAIQueryDeviceInfo.cs" />
+    <Compile Include="Packets\Commands\OAIReconnectCall.cs" />
+    <Compile Include="Packets\Commands\OAIResyncRequest.cs" />
+    <Compile Include="Packets\Commands\OAIRetrieveCall.cs" />
+    <Compile Include="Packets\Commands\OAITransferCall.cs" />
+    <Compile Include="Packets\Commands\OAITransferCallOneStep.cs" />
+    <Compile Include="Packets\Delays\OAIAgentDelay.cs" />
+    <Compile Include="Packets\Delays\OAICallDelay.cs" />
+    <Compile Include="Packets\Delays\OAIDelay.cs" />
+    <Compile Include="Packets\Delays\OAIDeviceDelay.cs" />
+    <Compile Include="Packets\Delays\OAINodeDelay.cs" />
+    <Compile Include="Packets\Delays\OAITrunkDelay.cs" />
+    <Compile Include="Packets\Events\Agent\OAIAgentEvent.cs" />
+    <Compile Include="Packets\Events\Call\OAICall.cs" />
+    <Compile Include="Packets\Events\Call\OAIDiverted.cs" />
+    <Compile Include="Packets\Events\Commands\OAIClearCallCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIClearConnectionCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIExtensionFeatureCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIHoldCallCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIMakeCallCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIReconnectCallCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIResyncRequestCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIRetrieveCallCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAITransferCallCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAITransferCallOneStepCF.cs" />
+    <Compile Include="Packets\Events\Feature\OAIFeature.cs" />
+    <Compile Include="Packets\Events\Gateway\OAIGateway.cs" />
+    <Compile Include="Packets\Events\Misc\OAIMisc.cs" />
+    <Compile Include="Packets\Events\System\OAISystem.cs" />
+    <Compile Include="Packets\Events\Unknown\OAIUnknownEvent.cs" />
+    <Compile Include="Queues\Changes\OAIAgentChangeQueue.cs" />
+    <Compile Include="Queues\Changes\OAICallChangeQueue.cs" />
+    <Compile Include="Queues\Changes\OAIDeviceChangeQueue.cs" />
+    <Compile Include="Queues\Changes\OAINodeChangeQueue.cs" />
+    <Compile Include="Queues\Changes\OAITrunkChangeQueue.cs" />
+    <Compile Include="Structures\OAIStructure.cs" />
+    <Compile Include="Structures\Queries\OAICallQuery.cs" />
+    <Compile Include="Threads\OAILifeSupport.cs" />
+    <Compile Include="Threads\OAIWorker.cs" />
+    <Compile Include="Tools\OAIInvokeID.cs" />
+    <Compile Include="Packets\Commands\OAIQueryHuntGroup.cs" />
+    <Compile Include="Packets\Commands\OAIQueryListExtended.cs" />
+    <Compile Include="Packets\Events\Agent\OAILogoff.cs" />
+    <Compile Include="Packets\Events\Agent\OAILogon.cs" />
+    <Compile Include="Packets\Events\Agent\OAINotReady.cs" />
+    <Compile Include="Packets\Events\Agent\OAIReady.cs" />
+    <Compile Include="Packets\Events\Agent\OAIWorkNotReady.cs" />
+    <Compile Include="Packets\Events\Call\OAICallCleared.cs" />
+    <Compile Include="Packets\Events\Call\OAIConferenced.cs" />
+    <Compile Include="Packets\Events\Call\OAIConnectionCleared.cs" />
+    <Compile Include="Packets\Events\Call\OAIDelivered.cs" />
+    <Compile Include="Packets\Events\Call\OAIEstablished.cs" />
+    <Compile Include="Packets\Events\Call\OAIEstablishedRouting.cs" />
+    <Compile Include="Packets\Events\Call\OAIFailed.cs" />
+    <Compile Include="Packets\Events\Call\OAIHeld.cs" />
+    <Compile Include="Packets\Events\Call\OAINetworkReached.cs" />
+    <Compile Include="Packets\Events\Call\OAIOriginated.cs" />
+    <Compile Include="Packets\Events\Call\OAIQueued.cs" />
+    <Compile Include="Packets\Events\Call\OAIRetrieved.cs" />
+    <Compile Include="Packets\Events\Call\OAIServiceInitiated.cs" />
+    <Compile Include="Packets\Events\Call\OAITransferred.cs" />
+    <Compile Include="Packets\Events\Commands\OAINoOperationCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIQueryHuntGroupCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIQueryListExtendedCF.cs" />
+    <Compile Include="Packets\Events\Feature\OAICallback.cs" />
+    <Compile Include="Packets\Events\Feature\OAICallInfo.cs" />
+    <Compile Include="Packets\Events\Feature\OAIDeviceOffline.cs" />
+    <Compile Include="Packets\Events\Feature\OAIDisplayControlEliminated.cs" />
+    <Compile Include="Packets\Events\Feature\OAIDisplayLanguageChanged.cs" />
+    <Compile Include="Packets\Events\Feature\OAIDoNotDisturb.cs" />
+    <Compile Include="Packets\Events\Feature\OAIElapsedTimeForCOCall.cs" />
+    <Compile Include="Packets\Events\Feature\OAIFeatureStatus.cs" />
+    <Compile Include="Packets\Events\Feature\OAIForwarded.cs" />
+    <Compile Include="Packets\Events\Feature\OAIGeneralInformation.cs" />
+    <Compile Include="Packets\Events\Feature\OAIKeysetMute.cs" />
+    <Compile Include="Packets\Events\Feature\OAIMSGWaiting.cs" />
+    <Compile Include="Packets\Events\Feature\OAIOfferingEnded.cs" />
+    <Compile Include="Packets\Events\Gateway\OAIConnectionStatusEvent.cs" />
+    <Compile Include="Packets\Events\Gateway\OAIGatewayDataFromApplication.cs" />
+    <Compile Include="Packets\Events\Misc\OAIDisplayEnteredExtension.cs" />
+    <Compile Include="Packets\Events\Misc\OAIDisplayStationChange.cs" />
+    <Compile Include="Packets\Events\Misc\OAIMonitorEnded.cs" />
+    <Compile Include="Packets\Events\Misc\OAIOffered.cs" />
+    <Compile Include="Packets\Events\Misc\OAIPortsExceeded.cs" />
+    <Compile Include="Packets\Events\Misc\OAIStationMessageRecording.cs" />
+    <Compile Include="Packets\Events\OAIConfirmation.cs" />
+    <Compile Include="Packets\Events\Gateway\OAILinkStatusEvent.cs" />
+    <Compile Include="Packets\Events\Misc\OAIResyncEnded.cs" />
+    <Compile Include="Packets\Events\Misc\OAIResyncResponse.cs" />
+    <Compile Include="Packets\Events\System\OAIAlarmGeneration.cs" />
+    <Compile Include="Packets\Events\System\OAIDatabaseChange.cs" />
+    <Compile Include="Packets\Events\System\OAIExtensionChange.cs" />
+    <Compile Include="Packets\Events\System\OAINightModeStatus.cs" />
+    <Compile Include="Packets\OAICommand.cs" />
+    <Compile Include="Configuration\OAIConfig.cs" />
+    <Compile Include="Queues\OAIDebuggerQueue.cs" />
+    <Compile Include="Queues\OAIPacketQueue.cs" />
+    <Compile Include="Queues\OAIWrittenQueue.cs" />
+    <Compile Include="Recovery\OAIState.cs" />
+    <Compile Include="Sequences\OAIAgentSequence.cs" />
+    <Compile Include="Sequences\OAIDeviceSequence.cs" />
+    <Compile Include="Sequences\OAISequence.cs" />
+    <Compile Include="Packets\OAIEvent.cs" />
+    <Compile Include="Packets\OAIPacket.cs" />
+    <Compile Include="Purgatory\OAICommandConfirmation.cs" />
+    <Compile Include="Queues\OAIConfirmedQueue.cs" />
+    <Compile Include="Queues\OAIQueue.cs" />
+    <Compile Include="Queues\OAIReadQueue.cs" />
+    <Compile Include="Sequences\OAIGlobalSequence.cs" />
+    <Compile Include="Structures\Queries\OAIQuery.cs" />
+    <Compile Include="Structures\Queries\OAIQueryExtendedAgent.cs" />
+    <Compile Include="Structures\Queries\OAIQueryExtendedDND.cs" />
+    <Compile Include="Structures\Queries\OAIQueryExtendedFeature.cs" />
+    <Compile Include="Structures\Queries\OAIQueryExtendedHuntGroup.cs" />
+    <Compile Include="Structures\Queries\OAIQueryExtendedStation.cs" />
+    <Compile Include="Structures\Queries\OAIQQueryHuntGroup.cs" />
+    <Compile Include="Threads\OAISocket.cs" />
+    <Compile Include="Tools\OAIUtils.cs" />
+    <Compile Include="Queues\OAIWriteQueue.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Threads\OAIPulse.cs" />
+    <Compile Include="Workers\OAIGlobalModeller.cs" />
+    <Compile Include="Workers\OAIModeller.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
