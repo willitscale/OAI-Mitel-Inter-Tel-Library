@@ -20,10 +20,15 @@ namespace OAI.Models
                 {
                     _Available = 0;
                 }
-                _Extension = value;
+                
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_Extension))
+                {
+                    _Extension = value;
 
-                // Trigger Agent update notification
-                OAIAgentChangeQueue.Relay().Line = _Agent;
+                    // Trigger Agent update notification
+                    OAIAgentChangeQueue.Relay().Line = _Agent;
+                }
             }
         }
 
@@ -37,10 +42,14 @@ namespace OAI.Models
 
             set
             {
-                _Username = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_Username))
+                {
+                    _Username = value;
 
-                // Trigger Agent update notification
-                OAIAgentChangeQueue.Relay().Line = _Agent;
+                    // Trigger Agent update notification
+                    OAIAgentChangeQueue.Relay().Line = _Agent;
+                }
             }
         }
 
@@ -54,10 +63,14 @@ namespace OAI.Models
 
             set
             {
-                _Agent = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_Agent))
+                {
+                    _Agent = value;
 
-                // Trigger Agent update notification
-                OAIAgentChangeQueue.Relay().Line = (null == _Agent) ? value : _Agent;
+                    // Trigger Agent update notification
+                    OAIAgentChangeQueue.Relay().Line = (null == _Agent) ? value : _Agent;
+                }
             }
         }
 
@@ -72,10 +85,14 @@ namespace OAI.Models
 
             set
             {
-                _Available = value;
+                // Only update/notify if a change has actually been made!
+                if (value != _Available)
+                {
+                    _Available = value;
 
-                // Trigger Agent update notification
-                OAIAgentChangeQueue.Relay().Line = _Agent;
+                    // Trigger Agent update notification
+                    OAIAgentChangeQueue.Relay().Line = _Agent;
+                }
             }
         }
 
@@ -89,10 +106,14 @@ namespace OAI.Models
 
             set
             {
-                _DND = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_DND))
+                {
+                    _DND = value;
 
-                // Trigger Agent update notification
-                OAIAgentChangeQueue.Relay().Line = _Agent;
+                    // Trigger Agent update notification
+                    OAIAgentChangeQueue.Relay().Line = _Agent;
+                }
             }
         }
 
@@ -133,10 +154,14 @@ namespace OAI.Models
 
             set
             {
-                _ActiveCall = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_ActiveCall))
+                {
+                    _ActiveCall = value;
 
-                // Trigger Agent update notification
-                OAIAgentChangeQueue.Relay().Line = _Agent;
+                    // Trigger Agent update notification
+                    OAIAgentChangeQueue.Relay().Line = _Agent;
+                }
             }
         }
 
@@ -179,13 +204,14 @@ namespace OAI.Models
             {
                 bool removed = _Calls.Remove(call);
 
-                if ( null != _ActiveCall && 0 == _ActiveCall.CompareTo(call) )
+                if (null != _ActiveCall && 0 == _ActiveCall.CompareTo(call))
                 {
                     _ActiveCall = null;
+
+                    // Trigger Agent update notification
+                    OAIAgentChangeQueue.Relay().Line = _Agent;
                 }
 
-                // Trigger Agent update notification
-                OAIAgentChangeQueue.Relay().Line = _Agent;
                 return removed;
             }
 

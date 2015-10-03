@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 // Custom
 using OAI.Packets;
 
@@ -59,7 +57,7 @@ namespace OAI.Tools
             return length;
         }
 
-        public static byte[] PBXString(byte[] command, Boolean linebreak)
+        public static byte[] PBXString(byte[] command, bool linebreak)
         {
             int length = command.Length;
 
@@ -147,6 +145,20 @@ namespace OAI.Tools
          */
         public static string[] PBXPacketSplit(string packet)
         {
+            // Packet is null, bail out!
+            if (null == packet)
+            {
+                return new string[]{};
+            }
+
+            // No string identifier found (|) so split on raw CSV basis
+            if (-1 == packet.IndexOf("|"))
+            {
+                return packet.Split(',');
+            }
+
+            // This is pretty heavy on resources and should only be
+            // used where necessary!
             return Regex.Split(packet.Trim(), 
                 ",(?=(?:[^\\|]*\\|[^\\|]*\\|)*(?![^\\|]*\\|))");
         }

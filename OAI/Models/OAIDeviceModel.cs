@@ -21,10 +21,15 @@ namespace OAI.Models
                 {
                     _Available = 0;
                 }
-                _Extension = value;
+                
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_Extension))
+                {
+                    _Extension = value;
 
-                // Trigger Device update notification
-                OAIDeviceChangeQueue.Relay().Line = (null == _Extension) ? value : _Extension;
+                    // Trigger Device update notification
+                    OAIDeviceChangeQueue.Relay().Line = (null == _Extension) ? value : _Extension;
+                }
             }
         }
 
@@ -38,10 +43,14 @@ namespace OAI.Models
 
             set
             {
-                _Type = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_Type))
+                {
+                    _Type = value;
 
-                // Trigger Device update notification
-                OAIDeviceChangeQueue.Relay().Line = _Extension;
+                    // Trigger Device update notification
+                    OAIDeviceChangeQueue.Relay().Line = _Extension;
+                }
             }
         }
 
@@ -55,10 +64,14 @@ namespace OAI.Models
 
             set
             {
-                _Agent = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_Agent))
+                {
+                    _Agent = value;
 
-                // Trigger Device update notification
-                OAIDeviceChangeQueue.Relay().Line = _Extension;
+                    // Trigger Device update notification
+                    OAIDeviceChangeQueue.Relay().Line = _Extension;
+                }
             }
         }
 
@@ -72,10 +85,14 @@ namespace OAI.Models
 
             set
             {
-                _Description = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_Description))
+                {
+                    _Description = value;
 
-                // Trigger Device update notification
-                OAIDeviceChangeQueue.Relay().Line = _Extension;
+                    // Trigger Device update notification
+                    OAIDeviceChangeQueue.Relay().Line = _Extension;
+                }
             }
         }
 
@@ -89,10 +106,13 @@ namespace OAI.Models
 
             set
             {
-                _Available = value;
+                if (_Available != value )
+                {
+                    _Available = value;
 
-                // Trigger Device update notification
-                OAIDeviceChangeQueue.Relay().Line = _Extension;
+                    // Trigger Device update notification
+                    OAIDeviceChangeQueue.Relay().Line = _Extension;
+                }
             }
         }
 
@@ -106,10 +126,14 @@ namespace OAI.Models
 
             set
             {
-                _DNDMessage = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_DNDMessage))
+                {
+                    _DNDMessage = value;
 
-                // Trigger Device update notification
-                OAIDeviceChangeQueue.Relay().Line = _Extension;
+                    // Trigger Device update notification
+                    OAIDeviceChangeQueue.Relay().Line = _Extension;
+                }
             }
         }
 
@@ -178,10 +202,14 @@ namespace OAI.Models
 
             set
             {
-                _ActiveCall = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_ActiveCall))
+                {
+                    _ActiveCall = value;
 
-                // Trigger Device update notification
-                OAIDeviceChangeQueue.Relay().Line = _Extension;
+                    // Trigger Device update notification
+                    OAIDeviceChangeQueue.Relay().Line = _Extension;
+                }
             }
         }
 

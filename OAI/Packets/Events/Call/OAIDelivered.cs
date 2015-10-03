@@ -295,7 +295,18 @@ namespace OAI.Packets.Events.Call
             OAIDebuggerQueue.Relay().Line = "InboundCall";
 
             AddCallToExtension(AlertingInternalExt());
+
+            OAIDeviceModel device = GetDevice(AlertingInternalExt());
+
+            CallModel.Extension = AlertingInternalExt();
+
+            if (null != device)
+            {
+                CallModel.Agent = device.Agent;
+            }
+
             CallModel.CLI = OutsideCallerNumber();
+            CallModel.Direction = OAICallDirection.INBOUND;
         }
 
         // Internal ----> External
@@ -304,20 +315,44 @@ namespace OAI.Packets.Events.Call
             OAIDebuggerQueue.Relay().Line = "OutboundCall";
 
             AddCallToExtension(InternalCallingExt());
+
+            OAIDeviceModel device = GetDevice(InternalCallingExt());
+
+            CallModel.Extension = InternalCallingExt();
+
+            if (null != device)
+            {
+                CallModel.Agent = device.Agent;
+            }
+
             CallModel.CLI = AlertingOutsideNumber();
+            CallModel.Direction = OAICallDirection.OUTBOUND;
         }
 
         protected void InternalCall()
         {
             OAIDebuggerQueue.Relay().Line = "InternalCall";
 
+            OAIDeviceModel device = GetDevice(InternalCallingExt());
+
+            CallModel.Extension = InternalCallingExt();
+            
+            if (null != device)
+            {
+                CallModel.Agent = device.Agent;
+            }
+
             AddCallToExtension(InternalCallingExt());
             AddCallToExtension(AlertingInternalExt());
+
+            CallModel.Direction = OAICallDirection.INTERNAL;
         }
 
         protected void ExternalCall()
         {
             OAIDebuggerQueue.Relay().Line = "ExternalCall";
+
+            CallModel.Direction = OAICallDirection.EXTERNAL;
             // TODO: ???
         }
     }

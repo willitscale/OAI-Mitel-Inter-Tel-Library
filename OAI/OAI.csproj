@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstraction\OAIDictionary.cs" />
+    <Compile Include="Activity\OAIResynchronising.cs" />
     <Compile Include="Activity\OAIRunning.cs" />
     <Compile Include="Bus\OAIAgentBus.cs" />
     <Compile Include="Bus\OAIAgentHuntGroupBus.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Bus\OAIFeatureBus.cs" />
     <Compile Include="Bus\OAIHuntGroupBus.cs" />
     <Compile Include="Bus\OAITrunkBus.cs" />
+    <Compile Include="Constants\OAICallDirection.cs" />
     <Compile Include="Constants\OAICallingDeviceType.cs" />
     <Compile Include="Constants\OAIEventCause.cs" />
     <Compile Include="Constants\OAIFeatureCodes.cs" />

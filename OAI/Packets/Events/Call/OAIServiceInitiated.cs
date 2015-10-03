@@ -114,6 +114,14 @@ namespace OAI.Packets.Events.Call
 
                 model.Call = call;
                 model.CNX = LocalCnxState();
+                model.Extension = InitiatingExt();
+
+                OAIDeviceModel device = GetDevice(InitiatingExt());
+
+                if (null != device)
+                {
+                    model.Agent = device.Agent;
+                }
 
                 if (newCall)
                 {

@@ -14,10 +14,14 @@ namespace OAI.Models
 
             set
             {
-                _Node = value;
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_Node))
+                {
+                    _Node = value;
 
                     // Trigger Node update notification
-                OAINodeChangeQueue.Relay().Line = _Node;
+                    OAINodeChangeQueue.Relay().Line = _Node;
+                }
             }
         }
 
@@ -31,6 +35,7 @@ namespace OAI.Models
 
             set
             {
+                // Only update/notify if a change has actually been made!
                 if (_State != value)
                 {
                     _State = value;
@@ -51,6 +56,7 @@ namespace OAI.Models
 
             set
             {
+                // Only update/notify if a change has actually been made!
                 if (_Status != value)
                 {
                     _Status = value;

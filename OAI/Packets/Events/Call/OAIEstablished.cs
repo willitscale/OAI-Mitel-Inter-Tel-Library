@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using OAI.Models;
 using OAI.Controllers;
+using OAI.Constants;
 
 namespace OAI.Packets.Events.Call
 {
@@ -22,10 +23,10 @@ namespace OAI.Packets.Events.Call
     {
         public const string EVENT = "ES";
 
-        protected OAICallModel CallModel;
-
         public OAIEstablished(string[] parts) : base(parts) { }
         public OAIEstablished(byte[] bytes) : base(bytes) { }
+
+        protected OAICallModel CallModel;
 
         /**
          * 5 - Answering_Internal_Ext
@@ -158,6 +159,31 @@ namespace OAI.Packets.Events.Call
             // Set the call in the controller
             SetCall();
 
+
+            // Bind the call to the appropriate devices/agents
+            if (0 == OAICallingDeviceType.EXTERNAL.CompareTo(AnsweringDeviceType()))
+            {
+                if (0 == OAICallingDeviceType.INTERNAL.CompareTo(CallingDeviceType()))
+                {
+                    OutboundCall();
+                }
+                else
+                {
+                    ExternalCall();
+                }
+            }
+            else
+            {
+                if (0 == OAICallingDeviceType.INTERNAL.CompareTo(CallingDeviceType()))
+                {
+                    InboundCall();
+                }
+                else
+                {
+                    InternalCall();
+                }
+            }
+
             // Add the call to the answering internal extension
             AddCallToExtension(AnsweringInternalExt());
 
@@ -182,15 +208,75 @@ namespace OAI.Packets.Events.Call
                     CallModel = new OAICallModel();
                 }
 
+                // TODO: AND THE REST??
+
                 CallModel.Call = call;
+
                 CallModel.DDI = TrunkOutsideNumber();
-                CallModel.CLI = OutsideCallerNumber();
+                CallModel.CNX = LocalCnxState();
 
                 if (newCall)
                 {
                     OAICallsController.Relay().Push(call, CallModel);
                 }
             }
+        }
+
+        // External ----> Internal
+        protected void InboundCall()
+        {
+            AddCallToExtension(AnsweringInternalExt());
+
+            OAIDeviceModel device = GetDevice(AnsweringInternalExt());
+
+            if (null != device)
+            {
+                CallModel.Agent = device.Agent;
+            }
+
+            CallModel.Extension = AnsweringInternalExt();
+            CallModel.CLI = OutsideCallerNumber();
+            CallModel.Direction = OAICallDirection.INBOUND;
+        }
+
+        // Internal ----> External
+        protected void OutboundCall()
+        {
+            AddCallToExtension(InternalCallingExt());
+
+            OAIDeviceModel device = GetDevice(InternalCallingExt());
+
+            if (null != device)
+            {
+                CallModel.Agent = device.Agent;
+            }
+
+            CallModel.Extension = InternalCallingExt();
+            CallModel.CLI = AnsweringOutsideNumber();
+            CallModel.Direction = OAICallDirection.OUTBOUND;
+        }
+
+        protected void InternalCall()
+        {
+            OAIDeviceModel device = GetDevice(InternalCallingExt());
+
+            CallModel.Extension = InternalCallingExt();
+
+            if (null != device)
+            {
+                CallModel.Agent = device.Agent;
+            }
+
+            AddCallToExtension(InternalCallingExt());
+            AddCallToExtension(AnsweringInternalExt());
+
+            CallModel.Direction = OAICallDirection.INTERNAL;
+        }
+
+        protected void ExternalCall()
+        {
+            CallModel.Direction = OAICallDirection.EXTERNAL;
+            // TODO: ???
         }
     }
 }
