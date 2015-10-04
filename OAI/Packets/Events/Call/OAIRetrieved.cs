@@ -154,13 +154,8 @@ namespace OAI.Packets.Events.Call
                 }
 
                 model.Call = call;
-
-                if (0 == OAICallingDeviceType.EXTERNAL.CompareTo(RetrievedDeviceType()))
-                {
-                    model.DDI = RetrievedDeviceTrunkNumber();
-                    model.CLI = RetrievedDeviceOutsideNumber();
-                }
-
+                model.DDI = RetrievedDeviceTrunkNumber();
+                model.CLI = RetrievedDeviceOutsideNumber();
                 model.CNX = LocalCnxState();
 
                 if (newCall)

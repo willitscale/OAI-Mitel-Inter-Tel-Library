@@ -174,7 +174,7 @@ namespace OAI.Packets.Events.Call
             }
             else
             {
-                if (0 == OAICallingDeviceType.INTERNAL.CompareTo(CallingDeviceType()))
+                if (0 == OAICallingDeviceType.EXTERNAL.CompareTo(CallingDeviceType()))
                 {
                     InboundCall();
                 }
