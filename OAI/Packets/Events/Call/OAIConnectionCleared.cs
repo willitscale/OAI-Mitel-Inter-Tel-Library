@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OAI.Controllers;
+using OAI.Queues.Changes;
 
 namespace OAI.Packets.Events.Call
 {
@@ -85,6 +86,9 @@ namespace OAI.Packets.Events.Call
                 OAICallsController.
                     Relay().
                     Pop(call);
+
+                // Notify the change queue that the call has been removed
+                OAICallChangeQueue.Relay().Line = call;
             }
         }
     }
