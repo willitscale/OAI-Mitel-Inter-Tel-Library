@@ -8,11 +8,14 @@ using OAI.Packets;
 using OAI.Packets.Commands;
 using OAI.Queues;
 using OAI.Workers;
+using OAI.Configuration;
 
 namespace OAI.Sequences
 {
     public class OAIGlobalSequence : OAISequence
     {
+        public OAIGlobalSequence(OAIConfig config) : base(config) { }
+
         public override void Step(OAIEvent evt)
         {
             // Don't initialise if already connected!

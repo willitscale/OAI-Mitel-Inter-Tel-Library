@@ -16,7 +16,7 @@ namespace OAI.Packets.Commands
     {
         public const string CMD = "_QH";
 
-        public OAIQueryHuntGroup(int huntGroup)
+        public OAIQueryHuntGroup(string huntGroup)
         {
             Command = CMD;
 
@@ -37,5 +37,10 @@ namespace OAI.Packets.Commands
         public override void Block() { }
 
         public override void Release() { }
+
+        public string GetHuntGroup()
+        {
+            return Arguments[0];
+        }
     }
 }

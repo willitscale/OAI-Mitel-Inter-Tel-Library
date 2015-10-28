@@ -4,6 +4,8 @@
     {
         private static bool Running = false;
 
+        public static int ActiveThreads = 0;
+
         public static bool Active
         {
             get

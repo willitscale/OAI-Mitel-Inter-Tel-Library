@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OAI.Packets;
 using OAI.Packets.Commands;
 using OAI.Queues;
+using OAI.Configuration;
 
 namespace OAI.Sequences
 {
@@ -14,31 +15,6 @@ namespace OAI.Sequences
     {
         public static bool Connected = false;
         public static bool DataBuilt = false;
-
-        public const int MASTER_HUNT_GROUP = 2114;
-
-        public static bool isConnected()
-        {
-            return Connected;
-        }
-
-        public static bool isDataBuilt()
-        {
-            return DataBuilt;
-        }
-
-        /**
-         * Generic Instance Connected Method for
-         * when the Sequence is being used abstractly
-         */
-        public bool iConnected()
-        {
-            return Connected;
-        }
-        public bool iDataBuilt()
-        {
-            return DataBuilt;
-        }
 
         // Stages
         public const int STAGE_START = 0x00;
@@ -64,6 +40,37 @@ namespace OAI.Sequences
         protected OAICommand LastPacket;
 
         public abstract void Step(OAIEvent oaiEvent);
+
+        protected OAIConfig Config;
+
+        public OAISequence(OAIConfig config)
+        {
+            Config = config;
+        }
+
+        public static bool isConnected()
+        {
+            return Connected;
+        }
+
+        public static bool isDataBuilt()
+        {
+            return DataBuilt;
+        }
+
+        /**
+         * Generic Instance Connected Method for
+         * when the Sequence is being used abstractly
+         */
+        public bool iConnected()
+        {
+            return Connected;
+        }
+
+        public bool iDataBuilt()
+        {
+            return DataBuilt;
+        }
 
         public void Reset()
         {
@@ -192,7 +199,7 @@ namespace OAI.Sequences
             if (LastPacket.Confirmation(evt))
             {
                 this.Stage = next;
-                OAIWriteQueue.Relay().Line = (LastPacket = new OAIQueryHuntGroup(MASTER_HUNT_GROUP));
+                OAIWriteQueue.Relay().Line = (LastPacket = new OAIQueryHuntGroup(Config.MasterHuntGroup));
             }
         }
 

@@ -9,11 +9,16 @@ using OAI.Structures.Queries;
 using OAI.Queues;
 using OAI.Bus;
 
+using OAI.Controllers;
+using OAI.Models;
+
 namespace OAI.Packets.Events.Commands
 {
     public class OAIQueryHuntGroupCF : OAIConfirmation
     {
         public const string COMMAND = OAIQueryHuntGroup.CMD;
+
+        protected OAIHuntGroupModel Model;
 
         public OAIQueryHuntGroupCF(string[] parts) : base(parts) {}
         public OAIQueryHuntGroupCF(byte[] bytes) : base(bytes) { }
@@ -68,11 +73,28 @@ namespace OAI.Packets.Events.Commands
             int offset = EntityOffset();
             int count = EntityCount() * SegmentCount();
             int segments = SegmentCount();
+            
+            OAIQueryHuntGroup cmd = (OAIQueryHuntGroup)Cmd;
+            string group = cmd.GetHuntGroup();
+
+            Model = OAIHuntGroupsController
+                .Relay()
+                .Peek(group);
+
+            if (null == Model)
+            {
+                Model = new OAIHuntGroupModel();
+            }
 
             for (int i = offset; i < offset+count; i += segments)
             {
                 OAIAgentHuntGroupBus.Relay().Push(Structure(i));
+                SetAttributes(i);
             }
+
+            OAIHuntGroupsController
+                .Relay()
+                .Push(group,Model);
         }
 
         public OAIQQueryHuntGroup Structure(int index)
@@ -87,6 +109,12 @@ namespace OAI.Packets.Events.Commands
             entity.ACD_UCD_Mode = IntPart(index+2);
 
             return entity;
+        }
+
+        public void SetAttributes(int index)
+        {
+            Model.AddAgent(Part(index));
+            Model.AddDevice(Part(index + 1));
         }
     }
 }

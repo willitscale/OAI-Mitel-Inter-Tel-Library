@@ -22,17 +22,38 @@ namespace OAI.Packets.Events.Agent
 
         public new void Process()
         {
+            string device = Extension();
+            string agent = Agent();
+
             // Set the agent with the logged in extension
-            SetAgent(Agent(), Extension());
+            SetAgent(agent, device);
 
             // Set the extension with the logged in agent
-            SetExtension(Extension(), Agent());
+            SetExtension(device, agent);
 
             // Set Agent as available
             SetAvailable(1);
 
+            string group = HuntGroup();
+
             // Add logged in hunt group
-            AddHuntGroup(HuntGroup());
+            AddHuntGroup(group);
+
+            OAIHuntGroupModel model = OAIHuntGroupsController
+                .Relay()
+                .Peek(group);
+
+            if (null == model)
+            {
+                model = new OAIHuntGroupModel();
+            }
+
+            model.AddAgent(agent);
+            model.AddDevice(device);
+
+            OAIHuntGroupsController
+                .Relay()
+                .Push(group, model);
         }
     }
 }

@@ -248,6 +248,18 @@ namespace OAI.Packets
             return null;
         }
 
+        protected OAIHuntGroupModel GetHuntGroup(string huntGroup)
+        {
+            if (null != huntGroup && 0 < huntGroup.Length)
+            {
+                return OAIHuntGroupsController
+                    .Relay()
+                    .Peek(huntGroup);
+            }
+
+            return null;
+        }
+
         protected void SetActiveCall(string extension, string call)
         {
             if (null != extension &&

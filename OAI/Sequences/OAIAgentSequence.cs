@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 using OAI.Packets;
 using OAI.Packets.Commands;
 using OAI.Queues;
+using OAI.Configuration;
 
 namespace OAI.Sequences
 {
     public class OAIAgentSequence : OAISequence
     {
-        protected int Agent;
+        protected string Agent;
 
-        public OAIAgentSequence(int agent)
+        public OAIAgentSequence(OAIConfig config, string agent) : 
+            base(config)
         {
             Agent = agent;
         }
@@ -23,7 +25,7 @@ namespace OAI.Sequences
         {
             // Don't initialise if already connected
             // Or if there was no device specified
-            if (Connected || 0 >= Agent)
+            if (Connected || null == Agent)
             {
                 return;
             }
@@ -71,7 +73,9 @@ namespace OAI.Sequences
                     // 004,CF,_MS,3,0,0002,000243,1:,000244,2:,S:00FE
                     if (LastPacket.Confirmation(oaiEvent))
                     {
-                        OAIWriteQueue.Relay().Line = (LastPacket = new OAIQueryListExtended(0, 17, 1));
+                        OAIWriteQueue.Relay().Line = (LastPacket = new OAIQueryListExtended(0,
+                            OAIQueryListExtended.LIST_TYPE_ACD_AGENT, 
+                            OAIQueryListExtended.MASK_ACD_AGENT_DESC));
                         Connected = true;
                     }
                     break;

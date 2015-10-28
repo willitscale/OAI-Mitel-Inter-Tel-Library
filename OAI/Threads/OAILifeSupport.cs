@@ -31,6 +31,8 @@ namespace OAI.Threads
 
         public void Run()
         {
+            OAIRunning.ActiveThreads++;
+
             // Doesn't leave the thread lingering for the full duration of the 
             // delay when the application is terminated
             int interval = 0;
@@ -39,6 +41,7 @@ namespace OAI.Threads
             {
                 if (!OAIRunning.Active)
                 {
+                    OAIRunning.ActiveThreads--;
                     return;
                 }
 

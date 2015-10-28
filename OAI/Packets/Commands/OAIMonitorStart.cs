@@ -93,9 +93,9 @@ namespace OAI.Packets.Commands
 
         public OAIMonitorStart() : this(0, new string[0]) {}
 
-        public OAIMonitorStart(int type, string[] filters) : this (0,type,filters){}
+        public OAIMonitorStart(int type, string[] filters) : this (null,type,filters){}
 
-        public OAIMonitorStart(int affected, int type, string[] filters)
+        public OAIMonitorStart(string affected, int type, string[] filters)
         {
             Command = CMD;
 
@@ -105,7 +105,7 @@ namespace OAI.Packets.Commands
             // Affected_ID
             // Indicates a phone, hunt/ACD group, modem (Axxess only), trunk group,
             // trunk, voice mail application, or agent ID. 
-            Arguments[0] = (0 == affected) ? "" : affected.ToString();
+            Arguments[0] = (null == affected) ? "" : affected;
 
             // Monitor_Type
             // Identifies the requested monitor type (default is “1”), which can be one of

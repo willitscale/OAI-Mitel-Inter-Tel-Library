@@ -24,11 +24,13 @@ namespace OAI.Threads
 
         public void Run()
         {
+            OAIRunning.ActiveThreads++;
             for (;;)
             {
                 // Application has stopped so kill the thread!
                 if (!OAIRunning.Active)
                 {
+                    OAIRunning.ActiveThreads--;
                     return;
                 }
 

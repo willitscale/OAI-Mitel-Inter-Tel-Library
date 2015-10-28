@@ -252,6 +252,8 @@ namespace OAI.Packets.Commands
          *                              9           <Premium_Feature_Status>    200
          */
 
+        public const int LIST_TYPE_NETWORK_NODE = 0x13;
+
         /**
          * Val. 	Description 		Bit # 		Field 						Hex   
          * 20       IPRC and            N/A         <Extension>                 N/A

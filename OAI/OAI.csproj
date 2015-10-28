@@ -119,6 +119,7 @@
     <Compile Include="Packets\Events\Commands\OAIExtensionFeatureCF.cs" />
     <Compile Include="Packets\Events\Commands\OAIHoldCallCF.cs" />
     <Compile Include="Packets\Events\Commands\OAIMakeCallCF.cs" />
+    <Compile Include="Packets\Events\Commands\OAIQueryDeviceInfoCF.cs" />
     <Compile Include="Packets\Events\Commands\OAIReconnectCallCF.cs" />
     <Compile Include="Packets\Events\Commands\OAIResyncRequestCF.cs" />
     <Compile Include="Packets\Events\Commands\OAIRetrieveCallCF.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Queues\Changes\OAIAgentChangeQueue.cs" />
     <Compile Include="Queues\Changes\OAICallChangeQueue.cs" />
     <Compile Include="Queues\Changes\OAIDeviceChangeQueue.cs" />
+    <Compile Include="Queues\Changes\OAIHuntGroupChangeQueue.cs" />
     <Compile Include="Queues\Changes\OAINodeChangeQueue.cs" />
     <Compile Include="Queues\Changes\OAITrunkChangeQueue.cs" />
     <Compile Include="Structures\OAIStructure.cs" />

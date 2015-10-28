@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 using OAI.Packets;
 using OAI.Packets.Commands;
 using OAI.Queues;
+using OAI.Configuration;
 
 namespace OAI.Sequences
 {
     public class OAIDeviceSequence : OAISequence
     {
-        protected int Device;
+        protected string Device;
 
-        public OAIDeviceSequence(int device)
+        public OAIDeviceSequence(OAIConfig config) : base(config) { }
+
+        public OAIDeviceSequence(OAIConfig config, string device) : base(config)
         {
             Device = device;
         }
@@ -23,7 +26,7 @@ namespace OAI.Sequences
         {
             // Don't initialise if already connected
             // Or if there was no device specified
-            if (Connected || 0 >= Device)
+            if (Connected || null == Device)
             {
                 return;
             }

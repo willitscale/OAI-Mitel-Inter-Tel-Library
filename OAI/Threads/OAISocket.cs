@@ -57,9 +57,11 @@ namespace OAI.Threads
 
         public void Run()
         {
+            OAIRunning.ActiveThreads++;
             try
             {
                 Client = new TcpClient();
+
                 Client.Connect(Config.Host, Config.Port);
 
                 WorkerThread.Start();
@@ -79,6 +81,7 @@ namespace OAI.Threads
                     {
                         if (!OAIRunning.Active)
                         {
+                            OAIRunning.ActiveThreads--;
                             return;
                         }
 
@@ -113,6 +116,7 @@ namespace OAI.Threads
                 Thread.Sleep(2000);
                 if (OAIRunning.Active)
                 {
+                    OAIRunning.ActiveThreads--;
                     Run();
                 }
             }

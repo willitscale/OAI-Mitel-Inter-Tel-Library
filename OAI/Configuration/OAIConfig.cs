@@ -13,20 +13,21 @@
         public const byte SOAI_LOGIN = 0x87;
 
         public OAIConfig(string host, int port, string name ) 
-            : this( host, port, name, "", SOAI_LOGIN) { }
+            : this( host, port, name, "", SOAI_LOGIN, null) { }
 
         public OAIConfig(string host, int port, string name, 
             string password)
-            : this(host, port, name, password, SOAI_LOGIN) { }
+            : this(host, port, name, password, SOAI_LOGIN, null) { }
 
-        public OAIConfig(string host, int port, string name, 
-            string password, byte type)
+        public OAIConfig(string host, int port, string name,
+            string password, byte type, string masterHuntGroup)
         {
             Host = host;
             Port = port;
             Name = name;
             Password = password;
             Type = type;
+            MasterHuntGroup = masterHuntGroup;
         }
 
         public string Host { get; set; }
@@ -34,5 +35,6 @@
         public byte Type { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
+        public string MasterHuntGroup { get; set; }
     }
 }
