@@ -2,7 +2,7 @@
 
 ### Requirements
 
-I designed this around the "System OAI Toolkit Specifications Manual – Issue 10.20, January 2011", so with thing in mind some modifications may be required for previous revisions of the API which I may implement in due course.
+I designed this around the "System OAI Toolkit Specifications Manual – Issue 10.20, January 2011", so with this in mind some modifications may be required for previous revisions of the API which I may implement in due course.
 
 ### Basic instantiation using sockets
 
@@ -202,10 +202,7 @@ namespace OAI.Threads
 
 ### Accessing the data captured by the library
 
-There are two buffers that the library uses, but both have a differnet mechanism and should be used in different ways.
-
-#### Bus
-The buses are treated as imutable as these are the direct request and responses from the OAI system which shouldn't really be used outside the scope of the library.
+Data can be accessed directly by the controllers, although it is advised that you do not modify this data outside of the library as it may have unpredicted results which could cause instability in the application and phone system.
 
 #### Controller
 The controllers are what should be used by external applications in finding out information about calls, agents, devices, nodes and trunks. You are able to access a singular instance or all of the models bound to the controller in one of two ways.
