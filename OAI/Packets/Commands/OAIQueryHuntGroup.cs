@@ -16,7 +16,12 @@ namespace OAI.Packets.Commands
     {
         public const string CMD = "_QH";
 
+        protected bool Master;
+
         public OAIQueryHuntGroup(string huntGroup)
+            : this(huntGroup, false) { }
+
+        public OAIQueryHuntGroup(string huntGroup, bool master)
         {
             Command = CMD;
 
@@ -27,6 +32,8 @@ namespace OAI.Packets.Commands
             // Where the valid device type for <Affected_Ext> is an ACD or 
             // UCD hunt group pilot number.
             Arguments[0] = huntGroup.ToString();
+
+            Master = master;
         }
 
         public override bool Delayed()
@@ -41,6 +48,11 @@ namespace OAI.Packets.Commands
         public string GetHuntGroup()
         {
             return Arguments[0];
+        }
+
+        public bool GetMaster()
+        {
+            return Master;
         }
     }
 }

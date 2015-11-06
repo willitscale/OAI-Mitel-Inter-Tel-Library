@@ -260,6 +260,30 @@ namespace OAI.Packets
             return null;
         }
 
+        protected OAIDNDModel GetDND(string dnd)
+        {
+            if (null != dnd && 0 < dnd.Length)
+            {
+                return OAIDNDController
+                    .Relay()
+                    .Peek(dnd);
+            }
+
+            return null;
+        }
+
+        protected OAIFeatureModel GetFeature(string feature)
+        {
+            if (null != feature && 0 < feature.Length)
+            {
+                return OAIFeatureController
+                    .Relay()
+                    .Peek(feature);
+            }
+
+            return null;
+        }
+
         protected void SetActiveCall(string extension, string call)
         {
             if (null != extension &&

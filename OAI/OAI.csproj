@@ -62,15 +62,6 @@
     <Compile Include="Abstraction\OAIDictionary.cs" />
     <Compile Include="Activity\OAIResynchronising.cs" />
     <Compile Include="Activity\OAIRunning.cs" />
-    <Compile Include="Bus\OAIAgentBus.cs" />
-    <Compile Include="Bus\OAIAgentHuntGroupBus.cs" />
-    <Compile Include="Bus\OAIBus.cs" />
-    <Compile Include="Bus\OAICallBus.cs" />
-    <Compile Include="Bus\OAIDeviceBus.cs" />
-    <Compile Include="Bus\OAIDNDBus.cs" />
-    <Compile Include="Bus\OAIFeatureBus.cs" />
-    <Compile Include="Bus\OAIHuntGroupBus.cs" />
-    <Compile Include="Bus\OAITrunkBus.cs" />
     <Compile Include="Constants\OAICallDirection.cs" />
     <Compile Include="Constants\OAICallingDeviceType.cs" />
     <Compile Include="Constants\OAIEventCause.cs" />
@@ -79,6 +70,8 @@
     <Compile Include="Controllers\OAICallsController.cs" />
     <Compile Include="Controllers\OAIController.cs" />
     <Compile Include="Controllers\OAIDevicesController.cs" />
+    <Compile Include="Controllers\OAIDNDController.cs" />
+    <Compile Include="Controllers\OAIFeatureController.cs" />
     <Compile Include="Controllers\OAIHuntGroupsController.cs" />
     <Compile Include="Controllers\OAINodeController.cs" />
     <Compile Include="Controllers\OAITrunksController.cs" />
@@ -86,6 +79,8 @@
     <Compile Include="Factories\OAIEventProcessFactory.cs" />
     <Compile Include="Models\OAIAgentModel.cs" />
     <Compile Include="Models\OAICallModel.cs" />
+    <Compile Include="Models\OAIDNDModel.cs" />
+    <Compile Include="Models\OAIFeatureModel.cs" />
     <Compile Include="Models\OAIModel.cs" />
     <Compile Include="Models\OAIDeviceModel.cs" />
     <Compile Include="Models\OAIHuntGroupModel.cs" />
@@ -133,11 +128,11 @@
     <Compile Include="Queues\Changes\OAIAgentChangeQueue.cs" />
     <Compile Include="Queues\Changes\OAICallChangeQueue.cs" />
     <Compile Include="Queues\Changes\OAIDeviceChangeQueue.cs" />
+    <Compile Include="Queues\Changes\OAIDNDChangeQueue.cs" />
+    <Compile Include="Queues\Changes\OAIFeatureChangeQueue.cs" />
     <Compile Include="Queues\Changes\OAIHuntGroupChangeQueue.cs" />
     <Compile Include="Queues\Changes\OAINodeChangeQueue.cs" />
     <Compile Include="Queues\Changes\OAITrunkChangeQueue.cs" />
-    <Compile Include="Structures\OAIStructure.cs" />
-    <Compile Include="Structures\Queries\OAICallQuery.cs" />
     <Compile Include="Threads\OAILifeSupport.cs" />
     <Compile Include="Threads\OAIWorker.cs" />
     <Compile Include="Tools\OAIInvokeID.cs" />
@@ -210,19 +205,11 @@
     <Compile Include="Queues\OAIQueue.cs" />
     <Compile Include="Queues\OAIReadQueue.cs" />
     <Compile Include="Sequences\OAIGlobalSequence.cs" />
-    <Compile Include="Structures\Queries\OAIQuery.cs" />
-    <Compile Include="Structures\Queries\OAIQueryExtendedAgent.cs" />
-    <Compile Include="Structures\Queries\OAIQueryExtendedDND.cs" />
-    <Compile Include="Structures\Queries\OAIQueryExtendedFeature.cs" />
-    <Compile Include="Structures\Queries\OAIQueryExtendedHuntGroup.cs" />
-    <Compile Include="Structures\Queries\OAIQueryExtendedStation.cs" />
-    <Compile Include="Structures\Queries\OAIQQueryHuntGroup.cs" />
     <Compile Include="Threads\OAISocket.cs" />
     <Compile Include="Tools\OAIUtils.cs" />
     <Compile Include="Queues\OAIWriteQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Threads\OAIPulse.cs" />
-    <Compile Include="Workers\OAIGlobalModeller.cs" />
     <Compile Include="Workers\OAIModeller.cs" />
   </ItemGroup>
   <ItemGroup>

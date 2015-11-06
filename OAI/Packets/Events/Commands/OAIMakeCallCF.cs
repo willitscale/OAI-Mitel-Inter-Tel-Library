@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OAI.Packets.Commands;
-using OAI.Structures.Queries;
-using OAI.Bus;
 using OAI.Models;
 using OAI.Controllers;
 using OAI.Queues;
@@ -38,31 +36,36 @@ namespace OAI.Packets.Events.Commands
 
         public new void Process()
         {
-            OAICallQuery entity = new OAICallQuery();
-            OAICallModel model = new OAICallModel();
+            string call = CallID();
 
-            model.Extension = entity.Affected_Ext = AffectedExt();
-            model.Call = entity.Call_ID = CallID();
+            OAICallModel model = GetCall(call);
+            
+            if (null == model)
+            {
+                model = new OAICallModel();
+            }
 
-            OAIDeviceModel device = OAIDevicesController.Relay().Peek(entity.Affected_Ext);
+            model.Extension = AffectedExt();
+            model.Call = call;
+
+            OAIDeviceModel device = GetDevice(model.Extension);
 
             if (null == device)
             {
                 return;
             }
 
-            device.AddCall(entity.Call_ID);
+            device.AddCall(call);
 
-            OAIAgentModel agent = OAIAgentsController.Relay().Peek(device.Agent);
+            OAIAgentModel agent = GetAgent(device.Agent);
 
             if (null != agent)
             {
                 model.Agent = agent.Agent;
-                agent.AddCall(entity.Call_ID);
+                agent.AddCall(call);
             }
 
-            OAICallBus.Relay().Push(entity);
-            OAICallsController.Relay().Push(entity.Call_ID, model);
+            OAICallsController.Relay().Push(call, model);
         }
     }
 }

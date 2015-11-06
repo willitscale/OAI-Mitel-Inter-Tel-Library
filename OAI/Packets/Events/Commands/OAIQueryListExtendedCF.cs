@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Globalization;
 
 using OAI.Packets.Commands;
-using OAI.Structures.Queries;
-using OAI.Structures;
 using OAI.Queues;
-using OAI.Bus;
+
+using OAI.Controllers;
+using OAI.Models;
 
 namespace OAI.Packets.Events.Commands
 {
@@ -65,239 +65,279 @@ namespace OAI.Packets.Events.Commands
                     // 1 Station List
                     case OAIQueryListExtended.LIST_TYPE_STATION_LIST:
                     {
-                        OAIDeviceBus.Relay().Push(StationStructure(i));
+                        Station(i);
                         continue;
                     }
 
                     // 3 Hunt Group List
                     case OAIQueryListExtended.LIST_TYPE_HUNT_GROUP_LIST:
                     {
-                        OAIHuntGroupBus.Relay().Push(HuntGroupStructure(i));
+                        HuntGroup(i);
                         continue;
                     }
 
                     // 8 Feature List 
                     case OAIQueryListExtended.LIST_TYPE_FEATURE_LIST:
                     {
-                        OAIFeatureBus.Relay().Push(FeatureStructure(i));
+                        Feature(i);
                         continue;
                     }
 
                     // 10 DND Message List
                     case OAIQueryListExtended.LIST_TYPE_DND_LIST:
                     {
-                        OAIDNDBus.Relay().Push(DNDStructure(i));
+                        DND(i);
                         continue;
                     }
 
                     // 17 ACD Agent List
                     case OAIQueryListExtended.LIST_TYPE_ACD_AGENT:
                     {
-                        OAIAgentBus.Relay().Push(AgentStructure(i));
+                        Agent(i);
                         continue;
                     }
                 }
             }
         }
 
-        public OAIQueryExtendedFeature FeatureStructure(int index)
+        public void Feature(int index)
         {
-            OAIQueryExtendedFeature entity = new OAIQueryExtendedFeature();
+            string feature = Part(index++);
+
+            OAIFeatureModel model = GetFeature(feature);
+
+            if (null == model)
+            {
+                model = new OAIFeatureModel();
+                model.FeatureCode = feature;
+            }
 
             int mask = EntityFieldMask();
-
-            entity.Feature_Code = Part(index++);
 
             if (OAIQueryListExtended.MASK_FEATURE_LIST_FEAT_NUM ==
                 (OAIQueryListExtended.MASK_FEATURE_LIST_FEAT_NUM & mask))
             {
-                entity.Feature_Number = Part(index++);
+                model.FeatureNumber = Part(index++);
             }
 
             if (OAIQueryListExtended.MASK_FEATURE_LIST_FEAT_NAME ==
                 (OAIQueryListExtended.MASK_FEATURE_LIST_FEAT_NAME & mask))
             {
-                entity.Feature_Name = Part(index++);
+                model.FeatureName = Part(index++);
             }
 
             if (OAIQueryListExtended.MASK_FEATURE_LIST_IS_ADMIN ==
                 (OAIQueryListExtended.MASK_FEATURE_LIST_IS_ADMIN & mask))
             {
-                entity.Is_Administrator_Feature = IntPart(index++);
+                model.IsAdministratorFeature = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_FEATURE_LIST_IS_DIR ==
                 (OAIQueryListExtended.MASK_FEATURE_LIST_IS_DIR & mask))
             {
-                entity.Is_Directory_Feature = IntPart(index++);
+                model.IsDirectoryFeature = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_FEATURE_LIST_IS_DIAG ==
                 (OAIQueryListExtended.MASK_FEATURE_LIST_IS_DIAG & mask))
             {
-                entity.Is_Diagnostic_Feature = IntPart(index++);
+                model.IsDiagnosticFeature = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_FEATURE_LIST_IS_TOGGLE ==
                 (OAIQueryListExtended.MASK_FEATURE_LIST_IS_TOGGLE & mask))
             {
-                entity.Is_Toggleable_Feature = IntPart(index++);
+                model.IsToggleableFeature = IntPart(index++);
             }
 
-            return entity;
+            OAIFeatureController
+                .Relay()
+                .Push(feature, model);
         }
 
-        public OAIQueryExtendedDND DNDStructure(int index)
+        public void DND(int index)
         {
-            OAIQueryExtendedDND entity = new OAIQueryExtendedDND();
+            string dnd = Part(index++);
+
+            OAIDNDModel model = GetDND(dnd);
+
+            if (null == model)
+            {
+                model = new OAIDNDModel();
+                model.DNDMessageNumber = dnd;
+            }
 
             int mask = EntityFieldMask();
-
-            entity.DND_Message_Number = Part(index++);
 
             if (OAIQueryListExtended.MASK_DND_LIST_MESSAGE ==
                 (OAIQueryListExtended.MASK_DND_LIST_MESSAGE & mask))
             {
-                entity.DND_Message_Text = Part(index++);
+                model.DNDMessageText = Part(index++);
             }
 
-            return entity;
+            OAIDNDController
+                .Relay()
+                .Push(dnd, model);
         }
 
-        public OAIQueryExtendedHuntGroup HuntGroupStructure(int index)
+        public void HuntGroup(int index)
         {
-            OAIQueryExtendedHuntGroup entity = new OAIQueryExtendedHuntGroup();
+            string huntGroup = Part(index++);
+
+            OAIHuntGroupModel model = GetHuntGroup(huntGroup);
+
+            if (null == model)
+            {
+                model = new OAIHuntGroupModel();
+                model.HuntGroup = huntGroup;
+            }
 
             int mask = EntityFieldMask();
-
-            entity.Extension = Part(index++);
 
             if (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_USER ==
                 (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_USER & mask))
             {
-                entity.Username = Part(index++);
+                model.Username = Part(index++);
             }
 
             if (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_DESC ==
                 (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_DESC & mask))
             {
-                entity.Description = Part(index++);
+                model.Description = Part(index++);
             }
 
             if (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_HUNT_GROUP ==
                 (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_HUNT_GROUP & mask))
             {
-                entity.Hunt_Group_Type = IntPart(index++);
+                model.HuntGroupType = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_MEMBERS ==
                 (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_MEMBERS & mask))
             {
-                entity.Number_Of_Members = IntPart(index++);
+                model.NumberOfMembers = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_MAILBOX ==
                 (OAIQueryListExtended.MASK_HUNT_GROUP_LIST_MAILBOX & mask))
             {
-                entity.Mailbox_Node_Number = IntPart(index++);
+                model.MailboxNodeNumber = IntPart(index++);
             }
 
-
-            return entity;
+            OAIHuntGroupsController
+                .Relay()
+                .Push(huntGroup, model);
         }
 
-        public OAIQueryExtendedAgent AgentStructure(int index)
+        public void Agent(int index)
         {
-            OAIQueryExtendedAgent entity = new OAIQueryExtendedAgent();
+            string agent = Part(index++);
+
+            OAIAgentModel model = GetAgent(agent);
+
+            if (null == model)
+            {
+                model = new OAIAgentModel();
+                model.Agent = agent;
+            }
 
             int mask = EntityFieldMask();
-
-            entity.Agent_ID = Part(index++);
 
             if (OAIQueryListExtended.MASK_ACD_AGENT_DESC ==
                 (OAIQueryListExtended.MASK_ACD_AGENT_DESC & mask))
             {
-                entity.Description = Part(index++);
+                model.Description = Part(index++);
             }
 
-            return entity;
+            OAIAgentsController
+                .Relay()
+                .Push(agent, model);
         }
 
-        public OAIQueryExtendedStation StationStructure(int index)
+        public void Station(int index)
         {
-            OAIQueryExtendedStation entity = new OAIQueryExtendedStation();
+            string extension = Part(index++);
+
+            OAIDeviceModel model = GetDevice(extension);
+
+            if (null == model)
+            {
+                model = new OAIDeviceModel();
+                model.Extension = extension;
+            }
 
             int mask = EntityFieldMask();
 
-            entity.Extension = Part(index++);
 
             if (OAIQueryListExtended.MASK_STATION_LIST_USER == 
                 (OAIQueryListExtended.MASK_STATION_LIST_USER & mask))
             {
-                entity.Username = Part(index++);
+                model.Username = Part(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_DESC ==
                 (OAIQueryListExtended.MASK_STATION_LIST_DESC & mask))
             {
-                entity.Description = Part(index++);
+                model.Description = Part(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_ATTEND ==
                 (OAIQueryListExtended.MASK_STATION_LIST_ATTEND & mask))
             {
-                entity.Attendant = IntPart(index++);
+                model.Attendant = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_IS_ADMIN ==
                 (OAIQueryListExtended.MASK_STATION_LIST_IS_ADMIN & mask))
             {
-                entity.Is_An_Administrator = IntPart(index++);
+                model.IsAnAdministrator = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_IS_ATTEND ==
                 (OAIQueryListExtended.MASK_STATION_LIST_IS_ATTEND & mask))
             {
-                entity.Is_An_Attendant = IntPart(index++);
+                model.IsAnAttendant = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_DAY_FLAGS ==
                 (OAIQueryListExtended.MASK_STATION_LIST_DAY_FLAGS & mask))
             {
-                entity.Day_COS_Flags = IntPart(index++);
+                model.DayCOSFlags = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_NIGHT_FLAGS ==
                 (OAIQueryListExtended.MASK_STATION_LIST_NIGHT_FLAGS & mask))
             {
-                entity.Night_COS_Flags = IntPart(index++);
+                model.NightCOSFlags = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_VOICE_MAIL ==
                 (OAIQueryListExtended.MASK_STATION_LIST_VOICE_MAIL & mask))
             {
-                entity.Voice_Mail_Extension = IntPart(index++);
+                model.VoiceMailExtension = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_DEVICE_TYPE ==
                 (OAIQueryListExtended.MASK_STATION_LIST_DEVICE_TYPE & mask))
             {
-                entity.Device_Type = IntPart(index++);
+                model.DeviceType = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_MAILBOX_NODE ==
                 (OAIQueryListExtended.MASK_STATION_LIST_MAILBOX_NODE & mask))
             {
-                entity.Mailbox_Node_Number = IntPart(index++);
+                model.MailboxNodeNumber = IntPart(index++);
             }
 
             if (OAIQueryListExtended.MASK_STATION_LIST_PHYSICAL_DEVICE ==
                 (OAIQueryListExtended.MASK_STATION_LIST_PHYSICAL_DEVICE & mask))
             {
-                entity.Physical_Device_Type = IntPart(index++);
+                model.PhysicalDeviceType = IntPart(index++);
             }
 
-            return entity;
+            OAIDevicesController
+                .Relay()
+                .Push(extension, model);
         }
     }
 }

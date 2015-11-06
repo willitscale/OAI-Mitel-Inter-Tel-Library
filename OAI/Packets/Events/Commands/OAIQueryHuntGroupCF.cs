@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OAI.Packets.Commands;
-using OAI.Structures.Queries;
 using OAI.Queues;
-using OAI.Bus;
 
 using OAI.Controllers;
 using OAI.Models;
+
+using OAI.Configuration;
 
 namespace OAI.Packets.Events.Commands
 {
@@ -19,6 +19,10 @@ namespace OAI.Packets.Events.Commands
         public const string COMMAND = OAIQueryHuntGroup.CMD;
 
         protected OAIHuntGroupModel Model;
+
+        protected string Group;
+
+        protected bool Master = false;
 
         public OAIQueryHuntGroupCF(string[] parts) : base(parts) {}
         public OAIQueryHuntGroupCF(byte[] bytes) : base(bytes) { }
@@ -75,11 +79,12 @@ namespace OAI.Packets.Events.Commands
             int segments = SegmentCount();
             
             OAIQueryHuntGroup cmd = (OAIQueryHuntGroup)Cmd;
-            string group = cmd.GetHuntGroup();
+            Group = cmd.GetHuntGroup();
+            Master = cmd.GetMaster();
 
             Model = OAIHuntGroupsController
                 .Relay()
-                .Peek(group);
+                .Peek(Group);
 
             if (null == Model)
             {
@@ -88,33 +93,68 @@ namespace OAI.Packets.Events.Commands
 
             for (int i = offset; i < offset+count; i += segments)
             {
-                OAIAgentHuntGroupBus.Relay().Push(Structure(i));
                 SetAttributes(i);
             }
 
             OAIHuntGroupsController
                 .Relay()
-                .Push(group,Model);
-        }
-
-        public OAIQQueryHuntGroup Structure(int index)
-        {
-            // LOGGED OUT - 5610,,0
-            // LOGGED IN AND FREE - 5488,1883,1
-            // LOGGED IN AND BUSY - 5054,1876,2
-            OAIQQueryHuntGroup entity = new OAIQQueryHuntGroup();
-
-            entity.Agent_ID = Part(index);
-            entity.Device_Ext = Part(index+1);
-            entity.ACD_UCD_Mode = IntPart(index+2);
-
-            return entity;
+                .Push(Group, Model);
         }
 
         public void SetAttributes(int index)
         {
-            Model.AddAgent(Part(index));
-            Model.AddDevice(Part(index + 1));
+            string agent = Part(index);
+            string device = Part(index + 1);
+            int available = (1 == IntPart(index + 2)) ? 1 : -1;
+
+            Model.AddAgent(agent);
+            Model.AddDevice(device);
+
+            if (null == Group || !Master || 
+                null == agent || null == device ||
+                0 >= agent.Length || 0 >= device.Length )
+            {
+                return;
+            }
+
+            SetAgent(agent, device, available);
+            SetDevice(device, agent, available);
+        }
+
+        protected void SetAgent(string agent, string device, int available)
+        {
+            OAIAgentModel model = GetAgent(agent);
+
+            if (null == model)
+            {
+                model = new OAIAgentModel();
+                model.Agent = agent;
+            }
+
+            model.Extension = device;
+            model.Available = available;
+
+            OAIAgentsController
+                .Relay()
+                .Push(agent, model);
+        }
+
+        protected void SetDevice(string device, string agent, int available)
+        {
+            OAIDeviceModel model = GetDevice(device);
+
+            if (null == model)
+            {
+                model = new OAIDeviceModel();
+                model.Extension = device;
+            }
+
+            model.Agent = agent;
+            model.Available = available;
+
+            OAIDevicesController
+                .Relay()
+                .Push(device, model);
         }
     }
 }

@@ -199,7 +199,7 @@ namespace OAI.Sequences
             if (LastPacket.Confirmation(evt))
             {
                 this.Stage = next;
-                OAIWriteQueue.Relay().Line = (LastPacket = new OAIQueryHuntGroup(Config.MasterHuntGroup));
+                OAIWriteQueue.Relay().Line = (LastPacket = new OAIQueryHuntGroup(Config.MasterHuntGroup, true));
             }
         }
 

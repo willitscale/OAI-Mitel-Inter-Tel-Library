@@ -53,6 +53,27 @@ namespace OAI.Models
             }
         }
 
+        private string _Description;
+        public string Description
+        {
+            get
+            {
+                return _Description;
+            }
+
+            set
+            {
+                // Only update/notify if a change has actually been made!
+                if (null == value || 0 != value.CompareTo(_Description))
+                {
+                    _Description = value;
+
+                    // Trigger Agent update notification
+                    OAIAgentChangeQueue.Relay().Line = _Agent;
+                }
+            }
+        }
+
         private string _Agent;
         public string Agent
         {
@@ -73,7 +94,6 @@ namespace OAI.Models
                 }
             }
         }
-
 
         private int _Available;
         public int Available

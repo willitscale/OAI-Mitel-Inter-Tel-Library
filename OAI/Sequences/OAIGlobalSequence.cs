@@ -108,10 +108,8 @@ namespace OAI.Sequences
                     // Build the base data set
                     if (Connected)
                     {
-                        (new OAIGlobalModeller()).Build();
                         DataBuilt = true;
                     }
-
 
                     break;
                 }
