@@ -55,5 +55,37 @@ namespace OAI.Packets.Events.Agent
                 .Relay()
                 .Push(group, model);
         }
+
+        protected void AddHuntGroup(string group)
+        {
+            OAIAgentModel agent = GetAgent(Agent());
+
+            if (null != agent)
+            {
+                agent.RemoveGroup(HuntGroup());
+            }
+
+            OAIDeviceModel device = GetDevice(Extension());
+
+            if (null != device)
+            {
+                device.RemoveGroup(HuntGroup());
+            }
+
+            OAIHuntGroupModel huntGroup = GetHuntGroup(group);
+
+            if (null == group)
+            {
+                huntGroup = new OAIHuntGroupModel();
+                huntGroup.HuntGroup = group;
+            }
+
+            huntGroup.AddAgent(Agent());
+            huntGroup.AddDevice(Extension());
+
+            OAIHuntGroupsController
+                .Relay()
+                .Push(group, huntGroup);
+        }
     }
 }

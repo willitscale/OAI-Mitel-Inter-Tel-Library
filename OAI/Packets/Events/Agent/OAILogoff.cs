@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OAI.Queues;
+using OAI.Models;
+using OAI.Controllers;
 
 namespace OAI.Packets.Events.Agent
 {
@@ -39,6 +41,38 @@ namespace OAI.Packets.Events.Agent
 
             // Remove logged in hunt group
             RemoveHuntGroup(HuntGroup());
+        }
+
+        protected void RemoveHuntGroup(string group)
+        {
+            OAIAgentModel agent = GetAgent(Agent());
+
+            if (null != agent)
+            {
+                agent.AddGroup(HuntGroup());
+            }
+
+            OAIDeviceModel device = GetDevice(Extension());
+
+            if (null != device)
+            {
+                device.AddGroup(HuntGroup());
+            }
+
+            OAIHuntGroupModel huntGroup = GetHuntGroup(group);
+
+            if (null == group)
+            {
+                huntGroup = new OAIHuntGroupModel();
+                huntGroup.HuntGroup = group;
+            }
+
+            huntGroup.RemoveAgent(Agent());
+            huntGroup.RemoveDevice(Extension());
+
+            OAIHuntGroupsController
+                .Relay()
+                .Push(group, huntGroup);
         }
     }
 }

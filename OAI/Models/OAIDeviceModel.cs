@@ -7,7 +7,6 @@ namespace OAI.Models
 {
     public class OAIDeviceModel : OAIModel
     {
-
         /**
          * <Device_Type> 
          *      0 Keyset Station Device         

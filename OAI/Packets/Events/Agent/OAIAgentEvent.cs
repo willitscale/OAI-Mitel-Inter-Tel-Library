@@ -74,40 +74,6 @@ namespace OAI.Packets.Events.Agent
             }
         }
 
-        protected void RemoveHuntGroup(string group)
-        {
-            OAIAgentModel agent = GetAgent(Agent());
-
-            if (null != agent)
-            {
-                agent.AddGroup(HuntGroup());
-            }
-
-            OAIDeviceModel device = GetDevice(Extension());
-
-            if (null != device)
-            {
-                device.AddGroup(HuntGroup());
-            }
-        }
-
-        protected void AddHuntGroup(string group)
-        {
-            OAIAgentModel agent = GetAgent(Agent());
-
-            if (null != agent)
-            {
-                agent.RemoveGroup(HuntGroup());
-            }
-
-            OAIDeviceModel device = GetDevice(Extension());
-
-            if (null != device)
-            {
-                device.RemoveGroup(HuntGroup());
-            }
-        }
-
         protected void SetAvailable(int available)
         {
             OAIAgentModel agent = GetAgent(Agent());

@@ -107,12 +107,20 @@ namespace OAI.Packets.Events.Commands
             string device = Part(index + 1);
             int available = (1 == IntPart(index + 2)) ? 1 : -1;
 
+            if (null == Group || 
+                null == agent || 
+                null == device ||
+                0 >= agent.Length || 
+                0 >= device.Length)
+            {
+                return;
+            }
+
+            // Only add if the extension and agent are present!
             Model.AddAgent(agent);
             Model.AddDevice(device);
 
-            if (null == Group || !Master || 
-                null == agent || null == device ||
-                0 >= agent.Length || 0 >= device.Length )
+            if (!Master)
             {
                 return;
             }
