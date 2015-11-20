@@ -100,7 +100,7 @@ namespace OAI.Packets.Events.Call
          * 
          * Displays the system-generated ID of the call to which the nth party is connected.
          */
-        public new string CallID(int party)
+        public string CallID(int party)
         {
             int offset = (party - 1 * 2) + 10;
             return Part(offset);

@@ -90,29 +90,5 @@ namespace OAI.Packets.Events.Agent
                 device.Available = available;
             }
         }
-
-        protected OAIDeviceModel GetDevice(string extension)
-        {
-            if (null != extension && 0 < extension.Length)
-            {
-                return OAIDevicesController
-                    .Relay()
-                    .Peek(extension);
-            }
-
-            return null;
-        }
-
-        protected OAIAgentModel GetAgent(string agent)
-        {
-            if (null != agent && 0 < agent.Length)
-            {
-                return OAIAgentsController
-                    .Relay()
-                    .Peek(agent);
-            }
-
-            return null;
-        }
     }
 }
