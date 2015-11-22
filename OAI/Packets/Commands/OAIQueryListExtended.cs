@@ -180,6 +180,11 @@ namespace OAI.Packets.Commands
          *                              1           <|Description|>             2
          *                              2           <Application_Type>          4
          */
+        public const int LIST_TYPE_VOICE_MAIL_APPLICATION_LIST = 0x0C;
+
+        public const int MASK_VOICE_MAIL_APPLICATION_LIST_USER = 0x001;
+        public const int MASK_VOICE_MAIL_APPLICATION_LIST_DESC = 0x002;
+        public const int MASK_VOICE_MAIL_APPLICATION_LIST_APP_TYPE = 0x004;
 
         /**
          * Val. 	Description 		Bit # 		Field 						Hex   
@@ -188,6 +193,10 @@ namespace OAI.Packets.Commands
          *                              0           <|Username|>                1
          *                              1           <|Description|>             2
          */
+        public const int LIST_TYPE_PRIVATE_NETWORKING_TRUNK_LIST = 0x0D;
+
+        public const int MASK_PRIVATE_NETWORKING_TRUNK_LIST_USER = 0x001;
+        public const int MASK_PRIVATE_NETWORKING_TRUNK_LIST_DESC = 0x002;
 
         /**
          * Val. 	Description 		Bit # 		Field 						Hex   
@@ -197,6 +206,11 @@ namespace OAI.Packets.Commands
          *                              1           <|Description|>             2
          *                              2           <Number_Of_Members>         4
          */
+        public const int LIST_TYPE_PRIVATE_NETWORKING_TRUNK_GROUP_LIST = 0x0E;
+
+        public const int MASK_PRIVATE_NETWORKING_TRUNK_GROUP_LIST_USER = 0x001;
+        public const int MASK_PRIVATE_NETWORKING_TRUNK_GROUP_LIST_DESC = 0x002;
+        public const int MASK_PRIVATE_NETWORKING_TRUNK_GROUP_LIST_MEMBERS = 0x004;
 
         /**
          * Val. 	Description 		Bit # 		Field 						Hex   
@@ -207,12 +221,21 @@ namespace OAI.Packets.Commands
          *                              2           <|Description|>             4
          *                              3           <Mailbox_Node_Number>       8
          */
+        public const int LIST_TYPE_OFF_NODE_DEVICE_LIST = 0x0F;
+
+        public const int MASK_OFF_NODE_DEVICE_LIST_DEV_TYPE = 0x001;
+        public const int MASK_OFF_NODE_DEVICE_LIST_USER = 0x002;
+        public const int MASK_OFF_NODE_DEVICE_LIST_DESC = 0x004;
+        public const int MASK_OFF_NODE_DEVICE_LIST_MAILBOX = 0x008;
 
         /**
          * Val. 	Description 		Bit # 		Field 						Hex   
          * 16       System COS Flag     N/A         <Flag_Number>               N/A
          *                              0           <|Description|>             1
          */
+        public const int LIST_TYPE_SYSTEM_COS_FLAG = 0x10;
+
+        public const int MASK_SYSTEM_COS_FLAG_DESC = 0x001;
 
         /**
          * Val. 	Description 		Bit # 		Field 						Hex
@@ -236,6 +259,17 @@ namespace OAI.Packets.Commands
          *                              7           <Voice_Mail_Status>         80
          *                              8           <Max_Parties_in_Conference> 100
          */
+        public const int LIST_TYPE_NODE_DATA = 0x12;
+
+        public const int MASK_NODE_DATA_DESC = 0x001;
+        public const int MASK_NODE_DATA_NET_EN = 0x002;
+        public const int MASK_NODE_DATA_PROTOCOL = 0x004;
+        public const int MASK_NODE_DATA_KSU_SW = 0x008;
+        public const int MASK_NODE_DATA_PREM = 0x010;
+        public const int MASK_NODE_DATA_COUNTRY = 0x020;
+        public const int MASK_NODE_DATA_TCPIP = 0x040;
+        public const int MASK_NODE_DATA_VOICE_MAIL = 0x080;
+        public const int MASK_NODE_DATA_MAX_PARTIES = 0x100;
 
         /**
          * Val. 	Description 		Bit # 		Field 						Hex   
@@ -251,8 +285,18 @@ namespace OAI.Packets.Commands
          *                              8           <KSU_SW_Version>            100
          *                              9           <Premium_Feature_Status>    200
          */
+        public const int LIST_TYPE_NETWORK_INFORMATION = 0x13;
 
-        public const int LIST_TYPE_NETWORK_NODE = 0x13;
+        public const int MASK_NETWORK_INFORMATION_NODE_DESC = 0x001;
+        public const int MASK_NETWORK_INFORMATION_IP = 0x002;
+        public const int MASK_NETWORK_INFORMATION_TCP = 0x004;
+        public const int MASK_NETWORK_INFORMATION_REDUNDANT_IP = 0x008;
+        public const int MASK_NETWORK_INFORMATION_REDUNDANT_TCP = 0x010;
+        public const int MASK_NETWORK_INFORMATION_SOCKETS_ENABLED = 0x020;
+        public const int MASK_NETWORK_INFORMATION_MAX_SOCKETS = 0x040;
+        public const int MASK_NETWORK_INFORMATION_PROTOCOL = 0x080;
+        public const int MASK_NETWORK_INFORMATION_KSU_SW = 0x100;
+        public const int MASK_NETWORK_INFORMATION_PREM = 0x200;
 
         /**
          * Val. 	Description 		Bit # 		Field 						Hex   
@@ -261,6 +305,10 @@ namespace OAI.Packets.Commands
          *                              0           <|Username|>                1
          *                              1           <|Description|>             2
          */
+        public const int LIST_TYPE_IPRC_AND_IP_CONNECTIONS = 0x14;
+
+        public const int MASK_IPRC_AND_IP_CONNECTIONS_USER = 0x001;
+        public const int MASK_IPRC_AND_IP_CONNECTIONS_DESC = 0x002;
 
         /**
          * Val. 	Description 		Bit # 		Field 						Hex   
@@ -272,6 +320,14 @@ namespace OAI.Packets.Commands
          *                              4           <Is_Personal_Call_Routing_Enabled> 10
          *                              5           <Mobile_Email_Address>      20
          */
+        public const int LIST_TYPE_USER = 0x15;
+
+        public const int MASK_USER_FIRST_NAME = 0x001;
+        public const int MASK_USER_LAST_NAME = 0x002;
+        public const int MASK_USER_EMAIL_ADDRESS = 0x004;
+        public const int MASK_USER_LOGIN = 0x008;
+        public const int MASK_USER_IS_PER_ROUTING = 0x010;
+        public const int MASK_USER_MOB_EMAIL = 0x020;
 
         /**
          * Val. 	Description 		Bit # 		Field 						Hex   
@@ -280,6 +336,11 @@ namespace OAI.Packets.Commands
          *                              1           <|Description|>             2
          *                              2           <Device_Type>               4
          */
+        public const int LIST_TYPE_ASSISTANT_LIST = 0x16;
+
+        public const int MASK_ASSISTANT_LIST_USER = 0x001;
+        public const int MASK_ASSISTANT_LIST_DESC = 0x002;
+        public const int MASK_ASSISTANT_LIST_DEV_TYPE = 0x004;
 
         public OAIQueryListExtended(int type, int mask) : this(0, type, mask) { }
 

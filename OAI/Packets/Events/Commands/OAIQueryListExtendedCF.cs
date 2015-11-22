@@ -17,6 +17,8 @@ namespace OAI.Packets.Events.Commands
     {
         public const string COMMAND = OAIQueryListExtended.CMD;
 
+        public const int ENTITY_OFFSET = 9;
+
         public OAIQueryListExtendedCF(string[] parts) : base(parts) {}
         public OAIQueryListExtendedCF(byte[] bytes) : base(bytes) {}
 
@@ -43,18 +45,13 @@ namespace OAI.Packets.Events.Commands
 
         public int SegmentCount()
         {
-            return ( Parts.Length - EntityOffset() ) /
+            return (Parts.Length - ENTITY_OFFSET) /
                 EntityCount();
-        }
-
-        public int EntityOffset()
-        {
-            return 9;
         }
 
         public new void Process()
         {
-            int offset = EntityOffset();
+            int offset = ENTITY_OFFSET;
             int segments = SegmentCount();
             int count = SegmentCount() * EntityCount();
 
