@@ -2,7 +2,7 @@
 
 ### Requirements
 
-I designed this around the "System OAI Toolkit Specifications Manual – Issue 10.20, January 2011", so with this in mind some modifications may be required for previous revisions of the API which I may implement in due course.
+I designed this around the "System OAI Toolkit Specifications Manual – Issue 10.20, January 2011", with this in mind some modifications may be required for previous revisions of the API which I may implement in due course.
 
 ### Basic instantiation using sockets
 
