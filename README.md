@@ -80,6 +80,7 @@ namespace OAI.Threads
 ```
 
 #### Sample Agent Event Listening Thread
+
 ```csharp
 using System;
 using System.Threading;
@@ -119,6 +120,7 @@ namespace OAI.Threads
 ```
 
 #### Sample Device Event Listening Thread
+
 ```csharp
 using System;
 using System.Threading;
@@ -205,6 +207,7 @@ namespace OAI.Threads
 Data can be accessed directly by the controllers, although it is advised that you do not modify this data outside of the library as it may have unpredicted results which could cause instability in the application and phone system.
 
 #### Controller
+
 The controllers are what should be used by external applications in finding out information about calls, agents, devices, nodes and trunks. You are able to access a singular instance or all of the models bound to the controller in one of two ways.
 
 ##### Controller Peeking
@@ -212,12 +215,14 @@ The controllers are what should be used by external applications in finding out 
 Controller peaking is a way of accessing a model inside the controller without removing the model from the controller.
 
 ###### Sample Prerequisites
+
 ```csharp
 using OAI.Controllers;
 using OAI.Models;
 ```
 
 ###### Sample Peeking
+
 ```csharp
 String AgentID = "5555";
 OAIAgentModel agent = OAIAgentsController.Relay().Peek(AgentID);
